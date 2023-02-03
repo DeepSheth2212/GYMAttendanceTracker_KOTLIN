@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GYM Attendance Tracker</string>
+    <string name="gymfreak">GymFreak</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="register_here">Register Here!</string>
+    <string name="sign_in">SIGN IN</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
