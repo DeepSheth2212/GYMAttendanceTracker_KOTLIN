@@ -18,9 +18,7 @@ class SignInActivity : AppCompatActivity() {
 
         auth  = Firebase.auth //FirebaseAuth.getInstance()
 
-//        if(auth.currentUser!=null){
-//            startActivity(Intent(this , MainActivity::class.java))
-//        }
+
 
         SignIn.setOnClickListener {
             val email = EmailSI.text.toString()

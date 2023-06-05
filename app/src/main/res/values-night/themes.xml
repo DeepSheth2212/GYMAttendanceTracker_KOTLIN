@@ -20,7 +20,7 @@
 
     <style name="Edit_text">
         <item name="android:textColor">@color/white</item>
-        <item name="android:background">@color/grey_3</item>
+        <item name="android:background">@drawable/edittext_background_night</item>
         <item name="android:textColorHint">@android:color/white</item>
         <item name="android:textSize">18sp</item>
         <item name="android:padding">10dp</item>

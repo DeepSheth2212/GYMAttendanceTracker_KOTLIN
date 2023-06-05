@@ -21,14 +21,16 @@
     <style name="Edit_text">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@drawable/edittext_background_light</item>
         <item name="android:textColorHint">@color/grey_3</item>
         <item name="android:padding">10dp</item>
+        <item name="cornerRadius">10dp</item>
     </style>
 
     <style name="Textview">
         <item name="android:textColor">@color/grey_3</item>
         <item name="android:textSize">14sp</item>
+
     </style>
 
     <style name="button">
@@ -47,4 +49,13 @@
     <style name="card_view">
         <item name="android:backgroundTint">@color/grey_cardview</item>
     </style>
+
+    <style name="Theme.GYMAttendanceTracker.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GYMAttendanceTracker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GYMAttendanceTracker.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         replace(HomeFragment())
 
 
+
+
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId){
                 R.id.home_menu -> {
