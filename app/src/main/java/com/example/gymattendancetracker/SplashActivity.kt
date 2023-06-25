@@ -1,5 +1,6 @@
 package com.example.gymattendancetracker
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
     val activityScope = CoroutineScope(Dispatchers.Main)
@@ -21,12 +23,12 @@ class SplashActivity : AppCompatActivity() {
             auth  = Firebase.auth //FirebaseAuth.getInstance()
 
             if(auth.currentUser!=null){
-                var intent = Intent(this@SplashActivity , MainActivity::class.java)
+                val intent = Intent(this@SplashActivity , MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
             else{
-                var intent = Intent(this@SplashActivity, SignInActivity::class.java)
+                val intent = Intent(this@SplashActivity, SignInActivity::class.java)
                 startActivity(intent)
                 finish()
             }

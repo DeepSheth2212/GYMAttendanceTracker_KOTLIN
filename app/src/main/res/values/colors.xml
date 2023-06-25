@@ -15,5 +15,6 @@
     <color name = "grey_2">#303030</color>
     <color name = "grey_3">#424242</color>
     <color name="grey_cardview">#595858</color>
+    <color name="green">#00FF00</color>
 
 </resources>
