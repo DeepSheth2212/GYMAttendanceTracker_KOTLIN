@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,8 +17,11 @@ import com.google.firebase.database.*
 
 
 class HomeFragment : Fragment() {
-    private lateinit var counter : TextView
-    private lateinit var dbref: DatabaseReference
+    private lateinit var counter: TextView
+    private lateinit var counterDbRef: DatabaseReference
+    private lateinit var trainersDbRef : DatabaseReference
+    private lateinit var trainersListAdapter: TrainersListAdapter
+    private var trainerList = mutableListOf<Trainer>()
 
 
     override fun onCreateView(
@@ -28,37 +32,58 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         counter = view.findViewById<TextView>(R.id.counter)
         val trainersListView = view.findViewById<RecyclerView>(R.id.trainers_list_view)
-        trainersListView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        trainersListView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        val trainersListAdapter = TrainersListAdapter(listOf(
-            Trainer("Deep1"),
-            Trainer("Deep2"),
-            Trainer("Deep3"),
-            Trainer("Deep4"),
-            Trainer("Deep5"),
-            Trainer("Deep6"),
-            Trainer("Deep7")
-        ))
+        trainersListAdapter = TrainersListAdapter(trainerList)
         trainersListView.adapter = trainersListAdapter
+
+        updateList()
 
 
         //for counter
-        dbref = FirebaseDatabase.getInstance().getReference("Data").child("LiveCounter")
+        counterDbRef = FirebaseDatabase.getInstance().getReference("Data").child("LiveCounter")
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var count = dataSnapshot.value
-               // Log.d("deep","count: $count")
+                // Log.d("deep","count: $count")
                 counter.text = count.toString()
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message
                 Log.w("deep", "loadPost:onCancelled", databaseError.toException())
             }
         }
 
-        dbref.addValueEventListener(postListener)
+        counterDbRef.addValueEventListener(postListener)
 
         return view
+    }
+
+    private fun updateList() {
+        trainersDbRef = FirebaseDatabase.getInstance().getReference("Trainers")
+        val postListener = object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                trainerList.clear()
+
+                for(childSnapshot in snapshot.children){
+                    val trainer = childSnapshot.getValue(Trainer::class.java)
+                    trainer?.let{
+                        if(it.isLive){
+                            trainerList.add(it)
+                        }
+                    }
+                }
+                trainersListAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(activity,"There might be some error!",Toast.LENGTH_SHORT).show()
+            }
+        }
+        trainersDbRef.addValueEventListener(postListener)
+
     }
 
 

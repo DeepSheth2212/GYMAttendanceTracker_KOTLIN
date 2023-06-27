@@ -1,7 +1,13 @@
 package com.example.gymattendancetracker.Model
 
-data class Trainer(
-    val name : String,
-    //val uid : String,
-    //val phone : String,
-)
+class Trainer{
+    var name : String? = null
+    var isLive : Boolean = false
+
+    constructor(){}
+
+    constructor(name : String , isLive : Boolean){
+        this.name = name
+        this.isLive = isLive
+    }
+}

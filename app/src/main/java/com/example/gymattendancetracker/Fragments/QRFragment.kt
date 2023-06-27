@@ -2,7 +2,9 @@ package com.example.gymattendancetracker.Fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.SurfaceHolder
@@ -10,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -19,18 +22,23 @@ import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_q_r.*
 import java.io.IOException
+import java.time.LocalDate
 
 
 class QRFragment : Fragment() {
 
     private lateinit var cameraSource: CameraSource
     private var isScanning = false
+
 
 
     override fun onCreateView(
@@ -95,6 +103,7 @@ class QRFragment : Fragment() {
         barcodeDetector.setProcessor(object : Detector.Processor<Barcode> {
             override fun release() {}
 
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun receiveDetections(detections: Detector.Detections<Barcode>) {
                 val qrCodes = detections.detectedItems
                 if (qrCodes.size() > 0 && !isScanning) {
@@ -106,10 +115,14 @@ class QRFragment : Fragment() {
                     //findNavController().navigate(QRScannerFragmentDirections.actionQRScannerFragmentToResultFragment(qrText))
 
                     if (qrText.equals("GymAttendance")) {
-                        val dbref =
-                            FirebaseDatabase.getInstance().getReference("Data").child("LiveCounter")
+                        val attendanceRef = FirebaseDatabase.getInstance().getReference("Users").child(Firebase.auth.currentUser!!.uid).child("Attendance")
+                        attendanceRef.child(LocalDate.now().toString()).setValue("true").addOnCompleteListener{
+                            if(it.isSuccessful){
+                                Toast.makeText(activity,"Attendance Registered!",Toast.LENGTH_SHORT).show()
+                            }
+                        }
 
-
+                        val dbref = FirebaseDatabase.getInstance().getReference("Data").child("LiveCounter")
                         val postListener = object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 var count = snapshot.getValue(Int::class.java)

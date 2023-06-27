@@ -19,7 +19,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         activityScope.launch {
-            delay(2000)
+            delay(1000)
             auth  = Firebase.auth //FirebaseAuth.getInstance()
 
             if(auth.currentUser!=null){
