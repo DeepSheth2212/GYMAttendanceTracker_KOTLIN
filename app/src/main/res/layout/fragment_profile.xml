@@ -6,16 +6,48 @@
     tools:context=".Fragments.ProfileFragment">
 
     <LinearLayout
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/fitness"/>
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UserName"
+                android:layout_gravity="center"
+                android:textSize="25sp"
+                android:layout_marginStart="20dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/monthlyRecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Your Monthly Record : 1/30"/>
+
+
+
         <Button
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:id="@+id/LogOutBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Log out"/>
+
     </LinearLayout>
 
 
